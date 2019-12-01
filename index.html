@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="red">
+<title>Burner</title>
+<meta name="description" content="A backlight for your bike">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    max-width: none;
+  }
+  #light {
+    height: 100vh; 
+    width: 100%;
+    background: red;
+    opacity: 1;
+    animation-name: pulse; 
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    font-size: 100px;
+    overflow: hidden;
+  }
+
+  @keyframes pulse {
+    0% {
+        opacity: 0.25;
+    }
+
+    75% {
+        opacity: 1;
+    }
+}
+</style>
+</head>
+<body>
+  <div id="light" />
+</body>
+<script src="./nosleep.min.js"></script>
+<script>
+    var noSleep = new NoSleep();
+    var wakeLockEnabled = false;
+    var toggleEl = document.querySelector("#light");
+
+    function openFullscreen(elem) {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+      }
+    }
+
+    toggleEl.addEventListener('touchend', function() {
+
+      if (!wakeLockEnabled) {
+        toggleEl.requestFullscreen();
+        noSleep.enable(); // keep the screen on!
+        wakeLockEnabled = true;
+      } else {
+		    document.exitFullscreen();
+        noSleep.disable(); // let the screen turn off.
+        wakeLockEnabled = false;
+      }
+    }, false);
+</script>
+
+<script>
+var lastTimestamp;
+var speedX = 0, speedY = 0, speedZ = 0;
+var toggleEl = document.querySelector("#light");
+
+const throttle = (func, limit) => {
+  let inThrottle
+  return function() {
+    const args = arguments
+    const context = this
+    if (!inThrottle) {
+      func.apply(context, args)
+      inThrottle = true
+      setTimeout(() => inThrottle = false, limit)
+    }
+  }
+}
+
+const setAnimationSpeed = (elem) => throttle((speed) => {
+  elem.style.animationDuration = `${pulseSpeed}s` 
+}, 500)
+
+const animator = setAnimationSpeed(toggleEl)
+
+if (window.DeviceMotionEvent) {
+  console.log("yess")
+  window.addEventListener('devicemotion', function(event) {
+    pulseSpeed = 1/event.acceleration.z
+    toggleEl.innerHTML = pulseSpeed
+    console.log(pulseSpeed)
+    animator(pulseSpeed) 
+  }, true);
+} else {
+  console.log("HOOO")
+}
+
+</script>
+</html>
