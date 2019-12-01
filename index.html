@@ -73,7 +73,7 @@
     elem.className = "on";
     elem.innerHTML = ''
     elem.animationName = null
-    // elem.requestFullscreen();
+    elem.requestFullscreen();
     noSleep.enable(); // keep the screen on!
     window.addEventListener('devicemotion', accelerationHandle, false);
     on = true;
@@ -83,7 +83,7 @@
     elem.innerHTML = '<p>Double tap to start</p>'
     elem.className = "off";
     if (on) {
-      // document.exitFullscreen()
+      document.exitFullscreen()
       noSleep.disable(); // let the screen turn off.
       window.removeEventListener('devicemotion', accelerationHandle, false)
     }
