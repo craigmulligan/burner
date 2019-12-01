@@ -1,0 +1,14 @@
+{
+  "name": "burner",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:hobochild/burner.git",
+  "author": "Craig Mulligan <hobochildster@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "https-localhost": "^4.4.1"
+  },
+  "scripts": {
+    "dev": "PORT=5000 yarn serve ./"
+  }
+}
