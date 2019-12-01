@@ -13,8 +13,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/",
-  "background_color": "##FF3300",
+  "start_url": "/burner/",
+  "background_color": "#FF3300",
   "display": "standalone",
   "theme_color": "#FF3300"
 }
