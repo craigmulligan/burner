@@ -1,4 +1,4 @@
-self.addEventListener('install', function(event) {
+this.addEventListener('install', function(event) {
   event.waitUntil(preLoad())
 })
 
@@ -10,7 +10,7 @@ var preLoad = function() {
   })
 }
 
-self.addEventListener('fetch', function(event) {
+this.addEventListener('fetch', function(event) {
   event.respondWith(
     checkResponse(event.request).catch(function() {
       return returnFromCache(event.request)
